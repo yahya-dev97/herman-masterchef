@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herman Master Chef Contest</title>
+    <style>
+        /* 1. BASE STYLES & RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* 2. HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            background: url('background.jpg') center center/cover no-repeat;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 15px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .logo-main {
+            width: 140px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .hero h2 {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+
+        .hero p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        /* 3. FORM DESIGN */
+        .form-container {
+            margin-top: 30px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 16px 25px;
+            margin-bottom: 15px;
+            border-radius: 40px;
+            border: 1px solid #fff;
+            background: transparent;
+            color: #fff;
+            outline: none;
+            font-size: 16px; /* Prevents iOS auto-zoom */
+        }
+
+        textarea {
+            border-radius: 20px;
+            height: 110px;
+            resize: none;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #bbb;
+        }
+
+        /* 4. BUTTONS & ACTIONS */
+        .button-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .terms-link {
+            color: #fff;
+            text-decoration: underline;
+            font-size: 14px;
+            font-style: italic;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .file-label, .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 40px;
+            border: 1px solid #fff;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            background: #fff;
+            color: #000;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: #fff;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* 5. BRAND STRIP (LOGOS) */
+        .brand-strip {
+            background: #f4f4f4;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .product-img {
+            max-height: 90px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .logos-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .logos-container img {
+            max-height: 50px;
+            width: auto;
+        }
+
+        /* 6. POPUP (MODAL) STYLES */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .popup-content {
+            background: #1a1a1a;
+            color: #fff;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid #444;
+        }
+
+        .close-x {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .popup-text h3 { margin: 20px 0 10px; font-size: 18px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .popup-text p { font-size: 14px; line-height: 1.6; color: #ccc; margin-bottom: 15px; }
+
+        /* 7. DESKTOP ADAPTATION */
+        @media (min-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .button-row { flex-direction: row; justify-content: center; }
+            .file-label, .submit-btn { width: auto; min-width: 180px; }
+            .brand-strip { flex-direction: row; justify-content: space-around; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="hero-content">
+        <img src="logo.png" class="logo-main" alt="Herman Logo">
+
+        <h1>MASTER CHEF In You</h1>
+        <h2>Searching for your home kitchen magic</h2>
+
+        <p>We are searching for the Master Chef in our group! Share your recipe, the story behind it, and a quick picture or video of your dish.</p>
+
+        <div class="form-container">
+            <form name="masterchef-entry" method="POST" data-netlify="true" enctype="multipart/form-data">
+                <input type="hidden" name="form-name" value="masterchef-entry" />
+
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="employee_id" placeholder="Employee ID No" required>
+                <textarea name="recipe" placeholder="Submit your Dish / Recipes" required></textarea>
+
+                <div class="button-row">
+                    <button type="button" class="terms-link" id="openTerms">Read terms and conditions</button>
+                    
+                    <label class="file-label">
+                        <input type="file" name="attachment" accept="image/*,video/*">
+                        Add photo/Video
+                    </label>
+                    
+                    <button type="submit" class="submit-btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="brand-strip">
+    
+    <div class="logos-container">
+        <img src="products.png" class="product-img" alt="Herman Products">
+        <img src="taste-logo.png" alt="Taste Discovery">
+        <img src="herman-logo.png" alt="Herman">
+        <img src="sharaf-logo.png" alt="Sharaf Group">
+    </div>
+</section>
+
+<div id="termsPopup" class="popup-overlay">
+    <div class="popup-content">
+        <span class="close-x" id="closeX">&times;</span>
+        <h2>Terms & Conditions</h2>
+        <div class="popup-text">
+            <h3>Eligibility</h3>
+            <p>Open to all Sharaf Group employees. One entry per person.</p>
+            <h3>Usage Rights</h3>
+            <p>By submitting, you grant Herman Foods permission to use your recipe and media in future marketing and product development.</p>
+            <h3>Selection</h3>
+            <p>Winners will be selected by our panel of expert chefs. Decisions are final.</p>
+        </div>
+        <button class="submit-btn" style="margin-top:20px; width:100%;" id="closeBtn">I Understand</button>
+    </div>
+</div>
+
+<script>
+    const popup = document.getElementById("termsPopup");
+    const openBtn = document.getElementById("openTerms");
+    const closeX = document.getElementById("closeX");
+    const closeBtn = document.getElementById("closeBtn");
+
+    // Open Popup
+    openBtn.onclick = function() {
+        popup.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    }
+
+    // Close Functions
+    function hidePopup() {
+        popup.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    closeX.onclick = hidePopup;
+    closeBtn.onclick = hidePopup;
+
+    window.onclick = function(event) {
+        if (event.target == popup) { hidePopup(); }
+    }
+</script>
+
+</body>
+</html>
